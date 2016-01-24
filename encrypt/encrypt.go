@@ -24,6 +24,14 @@ func pow(base int, power int) (value int) {
     return
 }
 
+func modulo(movement int, bottom int, top int) (int) {
+    movement -= 1
+    difference := top - bottom
+    division := movement / difference
+    remainder := movement - division*difference
+    return bottom + remainder
+}
+
 func (e *Encrypt) Rotate(number int) (tumbler int) {
     chars := []rune(e.Key)
     if (number > (len(chars)-2)) {

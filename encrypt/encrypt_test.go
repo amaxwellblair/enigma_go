@@ -83,3 +83,16 @@ func TestOffsetCanNotGoOutOfBoundsOnItsIndex(t *testing.T) {
         t.Fail()
     }
 }
+
+func TestModulo(t *testing.T)  {
+    k := modulo(3, 75, 77)
+    if k != 75 {
+        t.Log("Modulo still needs some work and is acting up: ", k)
+        t.Fail()
+    }
+    m := modulo(2, 75, 77)
+    if m != 77 {
+        t.Log("Modulo does not work on numbers with in the first cycle through")
+        t.Fail()
+    }
+}
