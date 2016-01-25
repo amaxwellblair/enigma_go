@@ -25,8 +25,7 @@ func pow(base int, power int) (value int) {
 }
 
 func modulo(movement int, bottom int, top int) (int) {
-    movement -= 1
-    difference := top - bottom
+    difference := top - bottom + 1
     division := movement / difference
     remainder := movement - division*difference
     return bottom + remainder
@@ -59,4 +58,16 @@ func (e *Encrypt) Offset(index int) (tumbler int) {
     }
     tumbler, _ = strconv.Atoi(string(dateRune[index]))
     return
+}
+
+func (e *Encrypt) Encrypt(rawText string) (string) {
+    rawRunes := []rune(rawText)
+    var totalTumble int
+    var index int
+    for i := 0; i < len(rawRunes); i++ {
+        index = modulo(i, 0, 3)
+        totalTumble = e.Offset(index) + e.Rotate(index) + int(rawRunes[i]) - int('a')
+        rawRunes[i] = rune(modulo(totalTumble, 97, 122))
+    }
+    return string(rawRunes)
 }

@@ -92,7 +92,49 @@ func TestModulo(t *testing.T)  {
     }
     m := modulo(2, 75, 77)
     if m != 77 {
-        t.Log("Modulo does not work on numbers with in the first cycle through")
+        t.Log("Modulo does not work on numbers with in the first cycle through", m)
+        t.Fail()
+    }
+    m = modulo(9, 75, 77)
+    if m != 75 {
+        t.Log("Modulo does not work on numbers with in the third cycle through", m)
+        t.Fail()
+    }
+}
+
+func TestEncryptOnASingleLetter(t *testing.T)  {
+    e := New()
+    e.Date = "01012016"
+    e.Key = "12345"
+    secret := e.Encrypt("a")
+    if secret != "q" {
+        t.Log("Encrypt didn't work properly on one letter: ", secret)
+        t.Fail()
+    }
+}
+
+func TestEncryptOnMultipleLetters(t *testing.T)  {
+    e := New()
+    e.Date = "01012016"
+    e.Key = "12345"
+    secret := e.Encrypt("aa")
+    if secret != "qz" {
+        t.Log("Encrypt didn't work properly on two letters: ", secret)
+        t.Fail()
+    }
+    secret = e.Encrypt("aaa")
+    if secret != "qzn" {
+        t.Log("Encrypt didn't work properly on three letters: ", secret)
+        t.Fail()
+    }
+    secret = e.Encrypt("aaaa")
+    if secret != "qznz" {
+        t.Log("Encrypt didn't work properly on four letters: ", secret)
+        t.Fail()
+    }
+    secret = e.Encrypt("aaaaaaaa")
+    if secret != "qznzqznz" {
+        t.Log("Encrypt didn't work properly on a sentence: ", secret)
         t.Fail()
     }
 }
